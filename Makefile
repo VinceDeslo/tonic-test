@@ -7,3 +7,5 @@ run-client:
 curl:
 	./scripts/curl.greeter.sh
 
+cli-client:
+	cargo run --bin cli -- -c client
