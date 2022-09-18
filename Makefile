@@ -1,11 +1,14 @@
 run-server:
-	cargo run --bin server
+	RUST_LOG=info cargo run --bin server
 
 run-client:
-	cargo run --bin client
+	RUST_LOG=info cargo run --bin client
 
 curl:
 	./scripts/curl.greeter.sh
 
 cli-client:
-	cargo run --bin cli -- -c client
+	RUST_LOG=info cargo run --bin cli -- -c client
+
+cli-server:
+	RUST_LOG=info cargo run --bin cli -- -c server

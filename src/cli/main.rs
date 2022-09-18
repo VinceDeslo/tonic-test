@@ -1,9 +1,12 @@
 use clap::{App, Arg};
+use log::{error, info};
 
 mod commands;
-use commands::client;
+use commands::{server, client};
 
 fn main() {
+    env_logger::init();
+
     let command = Arg::new("command")
         .short('c')
         .long("command")
@@ -19,10 +22,17 @@ fn main() {
         .get_matches();
 
     if let Some(c) = matches.value_of("command") {
-        println!("Matched on command: {}", c);
+        info!("Matched on command: {}", c);
         match c {
-            "client" => client().unwrap(),
-            _ => println!("Command unavailable, try running a different command"),
+            "server" => {
+                info!("Running gRPC server");
+                server().unwrap();
+            }
+            "client" => {
+                info!("Running gRPC client");
+                client().unwrap();
+            },
+            _ => error!("Command unavailable, try running a different command"),
         }
     }
 }

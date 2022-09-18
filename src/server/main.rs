@@ -1,6 +1,7 @@
 use greeter::greeter_server::{Greeter, GreeterServer};
 use greeter::{GreetRequest, GreetResponse};
 use tonic::{transport::Server, Request, Response, Status};
+use log::{info};
 
 pub mod greeter {
     tonic::include_proto!("greeter");
@@ -12,7 +13,7 @@ pub struct GreeterService {}
 #[tonic::async_trait]
 impl Greeter for GreeterService {
     async fn greet(&self, req: Request<GreetRequest>) -> Result<Response<GreetResponse>, Status> {
-        println!("Got a request: {:?}", req);
+        info!("REQUEST: {:?}", req);
         let r = req.into_inner();
         match r.name.as_str() {
             "Vince" => Ok(Response::new(greeter::GreetResponse {
@@ -27,6 +28,8 @@ impl Greeter for GreeterService {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    env_logger::init();
+
     let address = "[::1]:8080".parse().unwrap();
     let greeter_service = GreeterService::default();
     let server = GreeterServer::new(greeter_service);
