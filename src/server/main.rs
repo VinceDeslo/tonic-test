@@ -19,7 +19,7 @@ impl Greeter for GreeterService {
         let r = req.into_inner();
         match r.name.as_str() {
             "Vince" => Ok(Response::new(greeter::GreetResponse {
-                greeting: format!("Fuck you {}", r.name),
+                greeting: format!("Fuck you {} :)", r.name),
             })),
             _ => Ok(Response::new(greeter::GreetResponse {
                 greeting: format!("Hello there {}", r.name),
